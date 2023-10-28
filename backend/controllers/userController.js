@@ -22,13 +22,22 @@ const getSingleUser = asyncHandler(async (req, res) => {
   }
 });
 
+const getMe = asyncHandler(async (req, res) => {
+  const user = {
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.name,
+  }
+  res.status(200).json(user)
+})
+
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(400);
   }
 
-  //check if user alrady exists
+  //check if user already exists
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
@@ -81,4 +90,4 @@ const generateToken = (id) => {
   });
 };
 
-export { getAllUsers, getSingleUser, registerUser, loginUser };
+export { getAllUsers, getSingleUser, registerUser, loginUser ,getMe };
