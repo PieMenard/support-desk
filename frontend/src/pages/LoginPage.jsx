@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../features/auth/authSlice';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,12 @@ const LoginPage = () => {
 
   const { email, password } = formData;
 
+  const dispatch = useDispatch();
+
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -20,6 +28,11 @@ const LoginPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
   };
 
   return (
@@ -33,7 +46,6 @@ const LoginPage = () => {
 
       <section className="form">
         <form onSubmit={onSubmit}>
-          
           <div className="form-group">
             <input
               type="email"
@@ -55,18 +67,6 @@ const LoginPage = () => {
               value={password}
               onChange={onChange}
               placeholder="Enter password"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="password2"
-              name="password2"
-              value={password2}
-              onChange={onChange}
-              placeholder="Confirm password"
               required
             />
           </div>
