@@ -21,12 +21,15 @@ const Header = () => {
       </div>
       <ul>
         {user ? (
-          <li>
-            <button className="btn" onClick={onLogOut}>
-              <FaSignOutAlt />
-              Log Out
-            </button>
-          </li>
+          <>
+            <h3>Welcome {user.name}</h3>
+            <li>
+              <button className="btn" onClick={onLogOut}>
+                <FaSignOutAlt />
+                Log Out
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li>
