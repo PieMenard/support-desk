@@ -7,12 +7,15 @@ import {
   deleteTicket,
   updateTicket,
 } from '../controllers/ticketController.js';
+import noteRoutes from './noteRoutes.js';
 
-const ticketRouter = express.Router();
+const router = express.Router();
 
-ticketRouter.get('/', protect, getTickets);
-ticketRouter.post('/', protect, createTicket);
-ticketRouter.get('/:id', protect, getTicket);
-ticketRouter.delete('/:id', protect, deleteTicket);
-ticketRouter.put('/:id', protect, updateTicket);
-export default ticketRouter;
+router.use('/:ticketId/notes', noteRoutes);
+
+router.get('/', protect, getTickets);
+router.post('/', protect, createTicket);
+router.get('/:id', protect, getTicket);
+router.delete('/:id', protect, deleteTicket);
+router.put('/:id', protect, updateTicket);
+export default router;
