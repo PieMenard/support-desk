@@ -16,6 +16,12 @@ const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // Get user from token
       req.user = await User.findById(decoded.id).select('-password');
+      // Check if a user was found
+      if (!req.user) {
+        res.status(401);
+        throw new Error('Not authorized');
+      }
+
       next(); // Call next to pass control to the next middleware or route handler
     } catch (error) {
       res.status(401); // Use 401 for unauthorized

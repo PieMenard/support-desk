@@ -1,5 +1,4 @@
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
 import Ticket from '../models/ticketModel.js';
 
 // @desc    Get user tickets
